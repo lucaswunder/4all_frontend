@@ -166,15 +166,14 @@ class TransferSend extends Component {
                           <div className="control">
                             <div className="select is-danger is-fullwidth">
                               <select name="creditCardId" onChange={this.handleInputChange} value={creditCardId}>
-                                {cards.map(card => (
+                                { !cards.msg ? cards.map(card => (
                                   <option key={card.id} value={card.id}>{card.cardNumber}</option>
-                                ))}
+                                )) : <option>Please, link a credit card</option>}
                               </select>
                             </div>
                           </div>
                           <p className="help is-danger">
-                            Account balance lower than the amount to be transferred, you need a
-                            credit card.
+                            {cards.msg ? <a className="button are-small is-info is-outlined is-fullwidth" href="/account/creditcards">Link your Card</a> : 'Account balance lower than the amount to be transferred, you need a credit card.'}
                           </p>
                         </div>
                       </div>
