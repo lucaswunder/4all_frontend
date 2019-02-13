@@ -71,7 +71,7 @@ class CreditCardList extends Component {
                 </tr>
               </thead>
               <tbody>
-                {cards.map(card => (
+                { !cards.msg && cards.map(card => (
                   <tr key={card.id}>
                     <td>
                       <small>{card.cardNumber}</small>
