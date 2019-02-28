@@ -12,6 +12,7 @@ import { Footer, Container } from './styles';
 class TransferHistory extends Component {
   state = {
     op: 'SEND',
+    hasError: false,
   };
 
   async componentDidMount() {
@@ -23,14 +24,6 @@ class TransferHistory extends Component {
     getTransfersRequest();
   }
 
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   const { options, getTransfersRequest } = this.props;
-
-  //   if (prevProps.options !== options) {
-  //     getTransfersRequest();
-  //   }
-  // }
-
   handleSelectChange = (e) => {
     const { getTransfersRequest, setOption } = this.props;
 
@@ -39,6 +32,13 @@ class TransferHistory extends Component {
     setOption(e.target.value);
     getTransfersRequest();
   };
+
+  componentDidCatch(error, info) {
+    // Display fallback UI
+    this.setState({ hasError: true });
+    // You can also log the error to an error reporting service
+    console.log(error, info);
+  }
 
   render() {
     const { history } = this.props;

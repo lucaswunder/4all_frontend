@@ -29,8 +29,8 @@ class TransferSend extends Component {
   handleAmountChange = (e) => {
     const { value } = e;
     const { balance, getCardRequest } = this.props;
-    const b = parseFloat(balance);
-
+    const b = parseFloat(balance === null ? 0 : balance);
+    
     this.setState({
       amountToTransfer: value,
       showCard: value > b,
