@@ -1,10 +1,6 @@
 import { all, /* fork, */ takeLatest } from 'redux-saga/effects';
 
-import {
-  signIn,
-  signOut,
-  signUp, // getPermissions,
-} from './auth';
+import { signIn, signOut, signUp } from './auth';
 import { AuthTypes } from '../ducks/auth';
 
 import { getClient } from './client';
@@ -33,6 +29,5 @@ export default function* rootSaga() {
     takeLatest(CardTypes.CREATE_CARD_REQUEST, createCard),
     takeLatest(CardTypes.UPDATE_CARD_REQUEST, updateCard),
     takeLatest(CardTypes.DELETE_CARD_REQUEST, deleteCard),
-
   ]);
 }

@@ -6,7 +6,6 @@ const Client = ({ client }) => {
   const {
     name, cpf, fone, balance,
   } = client.data;
-
   return (
     <Container className="card">
       <header className="card-header">

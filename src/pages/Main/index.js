@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { toastr } from 'react-redux-toastr';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
 
@@ -13,8 +14,11 @@ import Cards from '~/components/Cards';
 import Transfers from '~/pages/Transfers';
 import CreditCards from '~/pages/Creditcards';
 import Client from '~/pages/Client';
+import socketIOClient from 'socket.io-client';
 
 import { Container } from './styles';
+
+const socket = socketIOClient('http://localhost:3333');
 
 class Main extends Component {
   static propTypes = {
@@ -22,9 +26,26 @@ class Main extends Component {
     client: PropTypes.shape().isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    socket.on('balanceUpdate', () => {
+      const { getClientRequest } = this.props;
+      getClientRequest();
+      toastr.success("Balance Updated', 'You received money");
+    });
+  }
+
   componentDidMount() {
     const { getClientRequest } = this.props;
     getClientRequest();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { client } = this.props;
+    if (client.data.id !== nextProps.client.data.id) {
+      socket.emit('storeClientInfo', { socketId: socket.id, id: nextProps.client.data.id });
+    }
   }
 
   render() {
